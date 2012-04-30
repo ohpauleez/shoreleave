@@ -1,0 +1,14 @@
+#!/bin/sh
+
+CLASSPATH=src:test:resource
+
+for f in lib/*.jar; do
+	CLASSPATH=$CLASSPATH:$f
+done
+for f in lib/dev/*.jar; do
+	CLASSPATH=$CLASSPATH:$f
+done
+
+#java -Xmx1G -cp $CLASSPATH clojure.main -h
+java -cp $CLASSPATH clojure.main -i script/repl_init.clj -r
+

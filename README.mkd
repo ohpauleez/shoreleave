@@ -1,0 +1,12 @@
+# shoreleave
+
+A smarter client-side in ClojureScript 
+
+There is WAY more coming...
+
+## License
+
+Copyright (C) 2012 Paul deGrandis
+
+Distributed under the Eclipse Public License, the same as Clojure.
+
