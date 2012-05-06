@@ -26,8 +26,8 @@
                       {:remote remote
                        :params (pr-str params)}
                       (apply hash-map extra-content))
-           :callback (when callback
-                       (fn [data]
-                         (let [data (if (= data "") "nil" data)]
-                           (callback (reader/read-string data)))))))
+           :on-success (when callback
+                         (fn [data]
+                           (let [data (if (= data "") "nil" data)]
+                             (callback (reader/read-string data)))))))
 
