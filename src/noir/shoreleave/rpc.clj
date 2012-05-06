@@ -1,5 +1,6 @@
 (ns noir.shoreleave.rpc
-  (:use [noir.core :only [defpage]]))
+  (:use [noir.core :only [defpage]]
+        [noir.server :only [load-views-ns]]))
 
 (def remote-uri "/_fetch")
 (def remotes (atom {}))
@@ -8,7 +9,7 @@
   (get @remotes remote))
 
 (defn add-remote [remote func]
-  (swap! remotes assoc remote func))
+  (swap! remotes assoc (keyword (name remote)) func))
 
 (defn safe-read [s]
   (binding [*read-eval* false]
@@ -17,7 +18,19 @@
 (defmacro defremote [remote params & body]
   `(do
     (defn ~remote ~params ~@body)
-    (add-remote ~(keyword (name remote)) ~remote)))
+    (add-remote ~(name remote) ~remote)))
+
+(defn remote-ns [namesp-sym & opts]
+  (let [{:keys [as]} (apply hash-map opts)
+        namesp (try
+                 (load-views-ns namesp-sym)
+                 (find-ns namesp-sym)
+                 (catch Exception e
+                   (throw (Exception. (str "Could not locate a namespace when aliasing remotes: " namesp-sym))
+                          e)))
+        public-fns (ns-publics namesp)]
+    (doseq [[fn-name fn-var] public-fns]
+      (add-remote (str as "/" fn-name) fn-var))))
 
 (defn call-remote [remote params]
   (if-let [func (get-remote remote)]
