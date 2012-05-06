@@ -63,7 +63,8 @@
              id
              uri
              method
-             (clj->js content)
+             (when content (common/->data-str
+                             (common/csrf-protected content method)))
              (clj->js headers)
              priority
              ;; This next one is a callback, and we could use it to get

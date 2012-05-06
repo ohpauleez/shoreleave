@@ -1,5 +1,6 @@
 (ns shoreleave.client.cookies
-  (:require [goog.net.Cookies :as gCookies]))
+  (:require [goog.net.Cookies :as gCookies]
+            [goog.string :as gstr]))
 
 (declare as-hash-map)
 (extend-type goog.net.Cookies
@@ -9,7 +10,8 @@
     ([c k]
       (-lookup c k nil))
     ([c k not-found]
-      (.get c (name k) not-found)))
+      (gstr/urlDecode (.get c (name k) not-found))
+      #_(.get c (name k) not-found)))
 
   ISeqable
   (-seq [c]
@@ -32,13 +34,13 @@
   ITransientAssociative
   (-assoc! [c k v & opts]
     (when-let [k (and (.isValidName c (name k)) (name k))]
-      (let [{:keys [max-age path domain secure?]} opts]
+      (let [{:keys [max-age path domain secure?]} (apply hash-map opts)]
         (.set c k v max-age path domain secure?))))
 
   ITransientMap
   (-dissoc! [c k & opts]
     (when-let [k (and (.isValidName c (name k)) (name k))]
-      (let [{:keys [path domain]} opts]
+      (let [{:keys [path domain]} (apply hash-map opts)]
         (.remove c k path domain))))
 
   IAssociative

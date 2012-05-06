@@ -22,12 +22,12 @@
 
 (defn remote-callback [remote params callback & extra-content]
   (xhr/xhr [:post *remote-uri*]
-               (merge
-                          {:remote remote
-                           :params (pr-str params)}
-                          (apply hash-map extra-content))
-               (when callback
-                             (fn [data]
-                                  (let [data (if (= data "") "nil" data)]
-                                    (callback (reader/read-string data)))))))
+           :content (merge
+                      {:remote remote
+                       :params (pr-str params)}
+                      (apply hash-map extra-content))
+           :callback (when callback
+                       (fn [data]
+                         (let [data (if (= data "") "nil" data)]
+                           (callback (reader/read-string data)))))))
 
