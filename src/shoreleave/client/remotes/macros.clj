@@ -5,7 +5,7 @@
   (let [func (if destruct
                `(fn ~destruct ~@body)
                nil)]
-    `(shoreleave.client.remotes.http-rpc/remote-callback ~(name sym)
+    `(shoreleave.client.remotes.http-rpc/remote-callback ~(str sym)
                                                         ~(vec params)
                                                         ~func)))
 
