@@ -57,17 +57,22 @@
 
   IHash
   (-hash [c]
-    (-hash (-persistent! c)))
-)
+    (-hash (-persistent! c))))
 
 (def cookies (goog.net.Cookies. js/document))
 
-(defn as-hash-map []
-  (zipmap (.getKeys cookies) (.getValues cookies)))
+(defn as-hash-map
+  ([]
+   (as-hash-map cookies))
+  ([cks]
+   (zipmap (.getKeys cks) (.getValues cks))))
 
-(defn cookies-enabled? []
-  (.isEnabled cookies))
+(defn cookies-enabled?
+  ([]
+   (cookies-enabled? cookies))
+  ([cks]
+   (.isEnabled cks)))
  
-(defn empty! []
-  (.clear cookies)) 
+(defn empty! [cks]
+  (.clear cks))
  
