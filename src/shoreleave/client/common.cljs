@@ -2,6 +2,7 @@
   (:require [shoreleave.client.brepl :as brepl])
   (:use [jayq.util :only [clj->js]]))
 
+;; Ignore the warning this generates
 (def clj->js clj->js)
 
 (defn args-map [location-str]
