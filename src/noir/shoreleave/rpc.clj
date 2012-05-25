@@ -40,7 +40,20 @@
        :body (pr-str result)})
     {:status 404}))
 
-(defpage [:post remote-uri] {:keys [remote params]}
+#_(defpage [:post remote-uri] {:keys [remote params]}
   (let [params (safe-read params)
         remote (keyword remote)]
     (call-remote remote params)))
+
+(defmacro defremote-uri [endpoint-uri]
+  `(defpage [:post ~endpoint-uri] args#
+     (let [params# (safe-read (:params args#))
+           remote# (keyword (:remote args#))]
+       (call-remote remote# params#))))
+
+(defn activate-remotes!
+  ([]
+   (activate-remotes! remote-uri))
+  ([endpoint-uri]
+   (defremote-uri endpoint-uri)))
+
