@@ -38,7 +38,7 @@
 (defn push-state [state-map]
   (let [{:keys [state title url]
          :or {state nil
-              title js/document.title}} site-map]
+              title js/document.title}} state-map]
     (apply js/window.history.pushState (map clj->js [state title url]))
     (.dispatchEvent history (goog.history.Event. url false))))
 
