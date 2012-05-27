@@ -1,11 +1,45 @@
-# shoreleave
+shoreleave
+==========
 
-A smarter client-side in ClojureScript 
+     A smarter client-side in ClojureScript
 
-There is WAY more coming...
+Shoreleave is a collection of integrated libraries that focuses on:
 
-## License
+ * Security
+ * Idiomatic interfaces
+ * Common client-side strategies
+ * HTML5 capabilities
+ * ClojureScript's advantages
 
+Shoreleave is made up of:
+
+ * A remotes package, with CSRF-protected XHR, Pooled-XHR, JSONP, and HTTP-RPC capabilities
+   * HTTP-RPC allows for exposing a server-side namespace as a client-side API
+ * A language-wide pub/sub system - enabling declarative binding for all aspects of your client-side
+   * Functions and atoms can be `topics`, allowing one function to subscribe to another that lives in a web worker!
+   * Use any function as a client-side service (like logging!)
+ * An idiomatic interface to cookies
+ * An idiomatic interface to browser history (with extended support for HTML5 History API)
+ * (Coming soon) An idiomatic interface to browser storage (Local Storage, Session Storage, and App Cache)
+ * Common auxiliary functions out-of-the-box to handle query strings, browser-repl, hash strings, and CLJS/JS interop
+ * Prepackaged services including: Google Maps and DuckDuckGo One-Click (Wikipedia and Alpha coming soon)
+ * A Function object that supports metadata
+ * (Coming soon) The ability to create embedded web workers
+
+Plays well with others
+----------------------
+Shoreleave currently makes use of jayq, but this will soon be refactored out.
+
+Aside from that, the library makes no assumptions about other libraries you make be using.
+I have found it to pair particularly well with [Enfocus](#)
+
+Examples and usage
+------------------
+
+Please the github wiki for examples of each library feature
+
+License
+-------
 Copyright (C) 2012 Paul deGrandis
 
 Distributed under the Eclipse Public License, the same as Clojure.
