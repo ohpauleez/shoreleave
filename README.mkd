@@ -3,7 +3,7 @@ shoreleave
 
      A smarter client-side in ClojureScript
 
-Shoreleave is a collection of integrated libraries that focuses on:
+###Shoreleave is a collection of integrated libraries that focuses on:
 
  * Security
  * Idiomatic interfaces
@@ -11,7 +11,7 @@ Shoreleave is a collection of integrated libraries that focuses on:
  * HTML5 capabilities
  * ClojureScript's advantages
 
-Shoreleave is made up of:
+###Shoreleave is made up of:
 
  * A remotes package, with CSRF-protected XHR, Pooled-XHR, JSONP, and HTTP-RPC capabilities
    * HTTP-RPC allows for exposing a server-side namespace as a client-side API
