@@ -28,6 +28,8 @@ A typical [Noir](http://www.webnoir.org/) setup might look like:
      (ns example
        (:require [noir.shoreleave.rpc :as rpc]))
      
+     ;; ...
+
      ;; The Base Web Server
      ;; ---------------------
      ;; Serve every view file found in `src/example/views`
@@ -44,12 +46,19 @@ A typical [Noir](http://www.webnoir.org/) setup might look like:
      (server/add-middleware ring.middleware.file-info/wrap-file-info)
      (server/add-middleware ring.middleware.anti-forgery/wrap-anti-forgery)
 
+You can also define single "global" rpc functions:
+
+     (defremote ping []
+       (do
+         (println "Pinged by client!")
+         "PONG - from the server"))
+
 
 ### A pub/sub abstraction (and implementations)
 
 _Why would I ever want to use this?_
 
-Shoreleave's pub/sub system enables you to completely decouple parts of your app and declaritively bind them together.
+Shoreleave's pub/sub system enables you to completely decouple parts of your app and declaratively bind them together.
 New features and functionalities can be built by composing pre-existing services/publishables.
 
 Additionally you can express cross-cutting functionality (like logging or metrics reporting) as a service.
@@ -57,7 +66,7 @@ Additionally you can express cross-cutting functionality (like logging or metric
 
 _Reactive ClojureScript_
 
-This gives you the heart of Reactive Javascript (RxJS), without the additional verbs (both a benefit and a tradeoff).
+This gives you the heart of Reactive JavaScript (RxJS), without the additional verbs (both a benefit and a tradeoff).
 It's often most beneficial to use DOM listeners as entry-points into the pub/sub system.
 
 - - -
@@ -93,7 +102,7 @@ Shoreleave has JSONP-wrapped support for external APIs including:
 
 Plays well with others
 ----------------------
-Shoreleave makes no assumptions about other libraries you make be using.
+Shoreleave makes no assumptions about other libraries you might be using in your app.
 
 I have found it to pair particularly well with [Enfocus](https://github.com/ckirkendall/enfocus)
 
