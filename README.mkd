@@ -19,16 +19,17 @@ Shoreleave has support for the following:
 
 Shoreleave's remotes package includes XHR, Pooled-XHR, JSONP, and HTTP-RPC capabilities.
 
-CSRF protection is built in if your Clojure server is using the [ring-anti-forgery](#) middleware.
+CSRF protection is built in if your Clojure server is using the [ring-anti-forgery](https://github.com/weavejester/ring-anti-forgery) middleware.
 
-The HTTP-RPC allows for exposing a server-side namespace as a client-side API, via a single server-side call, `remote-ns`
-A typical [Noir](#) setup might look like:
+The HTTP-RPC allows for exposing a server-side namespace as a client-side API, via a single server-side call, `remote-ns`.
+
+A typical [Noir](http://www.webnoir.org/) setup might look like:
 
      (ns example
        (:require [noir.shoreleave.rpc :as rpc]))
      
      ;; The Base Web Server
-     ;; ---------------------                                                                                                                                       
+     ;; ---------------------
      ;; Serve every view file found in `src/example/views`
      (server/load-views "src/example/views/")
      
@@ -46,26 +47,28 @@ A typical [Noir](#) setup might look like:
 
 ### A pub/sub abstraction (and implementations)
 
-**Why would I ever want to use this?**
+_Why would I ever want to use this?_
+
 Shoreleave's pub/sub system enables you to completely decouple parts of your app and declaritively bind them together.
 New features and functionalities can be built by composing pre-existing services/publishables.
+
+Additionally you can express cross-cutting functionality (like logging or metrics reporting) as a service.
+
+
+_Reactive ClojureScript_
 
 This gives you the heart of Reactive Javascript (RxJS), without the additional verbs (both a benefit and a tradeoff).
 It's often most beneficial to use DOM listeners as entry-points into the pub/sub system.
 
-Additionally you can express cross-cutting functionality (like logging or metrics reporting) as a service.
-
 - - -
 
-Shoreleave's pub/sub system is built upon two protocols: one to express "brokers" and one to express "publishables"
+Shoreleave's pub/sub system is built upon two protocols: "brokers" and "publishables"
 
-These allow anyone to implement new brokers or buses upon JavaScript or Browser technologies,
-while also extending the system's support to any user defined types (by making them publishable).
+Out of the box, Shoreleave allows you to publish funtions, atoms, and anything that implements (str ...)/.toString, as topics.
+The simple pub/sub bus has little overhead but will only work in single document cases.
 
-Out of the box, Shoreleave allows you to publish funtions, atoms, and anything that implements (str ...)/.toString as topics.
-The simple pub/sub bus has little overhead but will only work in single document cases.  The cross document bus has
-a small amount of overhead, but allows you to publish and subscribe from/to functions that live in other web workers
-or windows.
+The cross document bus has a small amount of overhead, but allows you to publish and subscribe from/to functions that live in other web workers
+or windows (in-browser concurrency for "free").
 
 
 ### Common client-side interactions
@@ -80,7 +83,7 @@ or windows.
 Shoreleave has JSONP-wrapped support for external APIs including:
 
  * Google Maps
- * DuckDuckGo One-Click
+ * DuckDuckGo Zero-Click
  * (Coming soon) Wikipedia and Alpha
 
 ### An enhanced the ClojureScript experience
@@ -90,14 +93,13 @@ Shoreleave has JSONP-wrapped support for external APIs including:
 
 Plays well with others
 ----------------------
-Shoreleave currently makes use of jayq, but this will soon be refactored out.
+Shoreleave makes no assumptions about other libraries you make be using.
 
-Aside from that, the library makes no assumptions about other libraries you make be using.
-I have found it to pair particularly well with [Enfocus](#)
+I have found it to pair particularly well with [Enfocus](https://github.com/ckirkendall/enfocus)
+
 
 Examples and usage
 ------------------
-
 Please the github wiki for examples of each library feature
 
 License
