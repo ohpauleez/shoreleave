@@ -46,18 +46,3 @@
         wfn (WorkerFn. (efn/Function. f {}) w agg)]
     wfn))
 
-
-(comment
-  
-  (defn some-fn [one two]
-    (+ one two))
-
-  ;(def worker (WorkerFn. some-fn))
-  (def sfn-worker (worker some-fn))
-  
-  (subscribe js/console.log worker)
-
-  (worker 1 2) ; IFn does postmessage
-
-
-  )
