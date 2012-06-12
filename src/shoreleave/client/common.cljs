@@ -1,9 +1,19 @@
 (ns shoreleave.client.common
-  (:require [shoreleave.client.brepl :as brepl])
-  (:use [jayq.util :only [clj->js]]))
+  (:require [shoreleave.client.brepl :as brepl]))
 
-;; Ignore the warning this generates
-(def clj->js clj->js)
+;; This is taken from: https://github.com/ibdknox/jayq/blob/master/src/jayq/util.cljs
+(defn clj->js
+  "Recursively transforms ClojureScript maps into Javascript objects,
+   other ClojureScript colls into JavaScript arrays, and ClojureScript
+   keywords into JavaScript strings."
+  [x]
+  (cond
+    (string? x) x
+    (keyword? x) (name x)
+    (map? x) (.-strobj (reduce (fn [m [k v]]
+               (assoc m (clj->js k) (clj->js v))) {} x))
+    (coll? x) (apply array (map clj->js x))
+    :else x))
 
 (defn args-map [location-str]
   (let [query-args-obj (goog.Uri.QueryData. (if (contains? #{\# \?} (get location-str 0))
