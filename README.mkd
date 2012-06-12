@@ -87,6 +87,7 @@ or windows (in-browser concurrency for "free").
 
  * An idiomatic interface to cookies
  * An idiomatic interface to browser history (with extended support for HTML5 History API)
+ * BlobBuilders and on-demand asset building
  * (Coming soon) An idiomatic interface to browser storage (Local Storage, Session Storage, and App Cache)
  * Common auxiliary functions out-of-the-box to handle query strings, browser-repl, hash strings, and CLJS/JS interop
 
@@ -101,7 +102,7 @@ Shoreleave has JSONP-wrapped support for external APIs including:
 ### An enhanced the ClojureScript experience
 
  * A `Function` object that supports metadata
- * (Coming soon) The ability to create embedded web workers
+ * The ability to create embedded web workers
 
 Plays well with others
 ----------------------
