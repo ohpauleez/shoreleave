@@ -99,7 +99,7 @@ Shoreleave has JSONP-wrapped support for external APIs including:
  * DuckDuckGo Zero-Click
  * (Coming soon) Wikipedia and Alpha
 
-### An enhanced the ClojureScript experience
+### An enhanced ClojureScript experience
 
  * A `Function` object that supports metadata
  * The ability to create embedded web workers
