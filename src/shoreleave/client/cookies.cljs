@@ -3,6 +3,9 @@
             [goog.string :as gstr]))
 
 (declare as-hash-map)
+
+;; TODO: Consider making Cookies extend IWatchable
+
 (extend-type goog.net.Cookies
 
   ILookup
