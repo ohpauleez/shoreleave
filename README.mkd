@@ -25,34 +25,37 @@ The HTTP-RPC allows for exposing a server-side namespace as a client-side API, v
 
 A typical [Noir](http://www.webnoir.org/) setup might look like:
 
-     (ns example
-       (:require [noir.shoreleave.rpc :as rpc]))
-     
-     ;; ...
+```clojure
+(ns example
+  (:require [noir.shoreleave.rpc :as rpc]))
 
-     ;; The Base Web Server
-     ;; ---------------------
-     ;; Serve every view file found in `src/example/views`
-     (server/load-views "src/example/views/")
-     
-     ;; Remote Namespaces
-     ;; -----------------
-     (rpc/activate-remotes!)
-     (rpc/remote-ns 'example.api :as "api") ; Note, you don't have to include example.api in this .clj file
-     
-     ;; Middleware
-     ;;-----------
-     (server/add-middleware ring.middleware.gzip/wrap-gzip)
-     (server/add-middleware ring.middleware.file-info/wrap-file-info)
-     (server/add-middleware ring.middleware.anti-forgery/wrap-anti-forgery)
+;; ...
+
+;; The Base Web Server
+;; ---------------------
+;; Serve every view file found in `src/example/views`
+(server/load-views "src/example/views/")
+
+;; Remote Namespaces
+;; -----------------
+(rpc/activate-remotes!)
+(rpc/remote-ns 'example.api :as "api") ; Note, you don't have to include example.api in this .clj file
+
+;; Middleware
+;;-----------
+(server/add-middleware ring.middleware.gzip/wrap-gzip)
+(server/add-middleware ring.middleware.file-info/wrap-file-info)
+(server/add-middleware ring.middleware.anti-forgery/wrap-anti-forgery)
+```
 
 You can also define single "global" rpc functions:
 
-     (defremote ping []
-       (do
-         (println "Pinged by client!")
-         "PONG - from the server"))
-
+```clojure
+(defremote ping []
+  (do
+    (println "Pinged by client!")
+    "PONG - from the server"))
+```
 
 ### A pub/sub abstraction (and implementations)
 

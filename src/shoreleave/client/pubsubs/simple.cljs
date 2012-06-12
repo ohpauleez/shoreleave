@@ -1,47 +1,11 @@
 (ns shoreleave.client.pubsubs.simple
   (:require [goog.pubsub.PubSub :as pubsub]
-            [shoreleave.client.pubsubs.protocols :as ps-protocols]
-            [shoreleave.client.efunction :as efn]))
+            [shoreleave.client.pubsubs.protocols :as ps-protocols]))
 
-(extend-protocol ps-protocols/IPublishable
-  
-  function
-  (topicify [t]
-    (or (ps-protocols/publishized? t)
-        (str `t)))
-  (publishized? [t]
-    (:sl-published (meta t)))
-  (publishize [fn-as-topic bus]
-    (if (ps-protocols/publishized? fn-as-topic)
-      fn-as-topic
-      (let [published-topic (ps-protocols/topicify fn-as-topic)
-            new-meta (assoc (meta fn-as-topic) :sl-published published-topic)]
-        (efn/Function. (fn [& args]
-                         (let [ret (apply fn-as-topic args)]
-                           (ps-protocols/publish bus published-topic ret)
-                           ret))
-                       new-meta))))
 
-  efn/Function
-  (topicify [t]
-    (or (ps-protocols/publishized? t)
-        (str `t)))
-  (publishized? [t]
-    (:sl-published (meta t)))
-  (publishize [fn-as-topic bus]
-    (if (ps-protocols/publishized? fn-as-topic)
-      fn-as-topic
-      (let [published-topic (ps-protocols/topicify fn-as-topic)
-            new-meta (assoc (meta fn-as-topic) :sl-published published-topic)]
-        (efn/Function. (fn [& args]
-                         (let [ret (apply (.-f fn-as-topic) args)]
-                           (ps-protocols/publish bus published-topic ret)
-                           ret))
-                       new-meta))))
-
-  default
-  (topicify [t]
-    (str t)))
+;; This is defined in ns barker.client.main, but ` resolves ns to user
+;(js/console.log (keyword `process-search)
+;(js/console.log (keyword (symbol "barker.client.main" (name 'process-search))))
 
 (extend-type goog.pubsub.PubSub
   ps-protocols/IMessageBrokerBus
