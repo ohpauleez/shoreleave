@@ -11,6 +11,24 @@ A smarter client-side in ClojureScript
  * HTML5 capabilities
  * ClojureScript's advantages
 
+Installing and using
+--------------------
+You can pull all the pieces of Shoreleave into your project by adding the following to your `project.clj`
+
+```clojure
+(defproject ...
+  
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [shoreleave "0.2.2-SNAPSHOT"]
+                 [shoreleave/shoreleave-remote-noir "0.2.2-SNAPSHOT"]
+                 ...
+                 ]
+...
+)
+```
+
+Individual utilies can be pulled in with `[shoreleave/UTILITY "0.2.2-SNAPSHOT"]`.  See the specific repo/artifact names below.
+
 Overview
 ----------
 Shoreleave has support for the following:
@@ -27,7 +45,8 @@ A typical [Noir](http://www.webnoir.org/) setup might look like:
 
 ```clojure
 (ns example
-  (:require [noir.shoreleave.rpc :as rpc]))
+  (:require [example.api] ; You don't have to pull this in, but it is suggested
+            [noir.shoreleave.rpc :as rpc]))
 
 ;; ...
 
@@ -39,7 +58,7 @@ A typical [Noir](http://www.webnoir.org/) setup might look like:
 ;; Remote Namespaces
 ;; -----------------
 (rpc/activate-remotes!)
-(rpc/remote-ns 'example.api :as "api") ; Note, you don't have to include example.api in this .clj file
+(rpc/remote-ns 'example.api :as "api")
 
 ;; Middleware
 ;;-----------
@@ -103,6 +122,19 @@ Shoreleave has JSONP-wrapped support for external APIs including:
 
  * A `Function` object that supports metadata
  * The ability to create embedded web workers
+
+Where's the code?
+-----------------
+Shoreleave is a big project and has been split up into smaller pieces:
+
+ * [shoreleave-core](https://github.com/shoreleave/shoreleave-core) - [Marg docs](http://shoreleave.github.com/shoreleave-core/)
+ * [shoreleave-browser](https://github.com/shoreleave/shoreleave-browser) - [Marg docs](http://shoreleave.github.com/browser/)
+ * [shoreleave-pubsub](https://github.com/shoreleave/shoreleave-pubsub) - [Marg docs](http://shoreleave.github.com/shoreleave-pubsub/)
+ * [shoreleave-remote](https://github.com/shoreleave/shoreleave-remote) - [Marg docs](http://shoreleave.github.com/shoreleave-remote/)
+ * [shoreleave-remote-noir](https://github.com/shoreleave/shoreleave-remote-noir) - Marg docs coming
+ * [shoreleave-services](https://github.com/shoreleave/shoreleave-services) - Marg docs coming
+ * [shoreleave-worker](https://github.com/shoreleave/shoreleave-worker) - [Marg docs](http://shoreleave.github.com/shoreleave-worker/)
+
 
 Plays well with others
 ----------------------
