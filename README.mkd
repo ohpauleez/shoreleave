@@ -125,7 +125,7 @@ Shoreleave has JSONP-wrapped support for external APIs including:
 
 Where's the code?
 -----------------
-Shoreleave is a big project and has been split up into smaller pieces:
+Shoreleave is a big project and has been split up into smaller pieces within the [Shoreleave organization](https://github.com/shoreleave):
 
  * [shoreleave-core](https://github.com/shoreleave/shoreleave-core) - [Marg docs](http://shoreleave.github.com/shoreleave-core/)
  * [shoreleave-browser](https://github.com/shoreleave/shoreleave-browser) - [Marg docs](http://shoreleave.github.com/browser/)
