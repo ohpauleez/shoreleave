@@ -128,7 +128,7 @@ Where's the code?
 Shoreleave is a big project and has been split up into smaller pieces within the [Shoreleave organization](https://github.com/shoreleave):
 
  * [shoreleave-core](https://github.com/shoreleave/shoreleave-core) - [Marg docs](http://shoreleave.github.com/shoreleave-core/)
- * [shoreleave-browser](https://github.com/shoreleave/shoreleave-browser) - [Marg docs](http://shoreleave.github.com/browser/)
+ * [shoreleave-browser](https://github.com/shoreleave/shoreleave-browser) - [Marg docs](http://shoreleave.github.com/shoreleave-browser/)
  * [shoreleave-pubsub](https://github.com/shoreleave/shoreleave-pubsub) - [Marg docs](http://shoreleave.github.com/shoreleave-pubsub/)
  * [shoreleave-remote](https://github.com/shoreleave/shoreleave-remote) - [Marg docs](http://shoreleave.github.com/shoreleave-remote/)
  * [shoreleave-remote-noir](https://github.com/shoreleave/shoreleave-remote-noir) - Marg docs coming
