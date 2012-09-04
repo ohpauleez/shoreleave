@@ -133,8 +133,8 @@ Shoreleave is a big project and has been split up into smaller pieces within the
  * [shoreleave-browser](https://github.com/shoreleave/shoreleave-browser) - [Marg docs](http://shoreleave.github.com/shoreleave-browser/)
  * [shoreleave-pubsub](https://github.com/shoreleave/shoreleave-pubsub) - [Marg docs](http://shoreleave.github.com/shoreleave-pubsub/)
  * [shoreleave-remote](https://github.com/shoreleave/shoreleave-remote) - [Marg docs](http://shoreleave.github.com/shoreleave-remote/)
- * [shoreleave-remote-noir](https://github.com/shoreleave/shoreleave-remote-noir) - [Marg docs](http://shoreleave.github.com/shoreleave-remote-noir/)
- * [shoreleave-services](https://github.com/shoreleave/shoreleave-services) - [Marg docs](http://shoreleave.github.com/shoreleave-services/)
+ * [shoreleave-remote-noir](https://github.com/shoreleave/shoreleave-remote-noir) - Temp [Marg docs](http://shoreleave.github.com/shoreleave-remote-noir/)
+ * [shoreleave-services](https://github.com/shoreleave/shoreleave-services) - Temp [Marg docs](http://shoreleave.github.com/shoreleave-services/)
  * [shoreleave-worker](https://github.com/shoreleave/shoreleave-worker) - [Marg docs](http://shoreleave.github.com/shoreleave-worker/)
 
 
