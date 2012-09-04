@@ -154,7 +154,7 @@ There is a community-contributed [demo app](https://github.com/robert-stuttaford
 
 Google Group and General Help
 ------------------------------
-There is a [Shoreleave CLJS]() Google Group.  Please feel free to post all questions and general comments there.
+There is a [Shoreleave CLJS](https://groups.google.com/forum/#!forum/shoreleave-cljs) Google Group.  Please feel free to post all questions and general comments there.
 
 Additionally, you can ping `ohpauleez` in #clojure on Freenode.
 
