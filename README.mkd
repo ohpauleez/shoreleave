@@ -104,10 +104,12 @@ It's often most beneficial to use DOM listeners as entry-points into the pub/sub
 Shoreleave's pub/sub system is built upon two protocols: "brokers" and "publishables"
 
 Out of the box, Shoreleave allows you to publish funtions, atoms, web workers, and anything that implements (str ...)/.toString, as topics.
-The simple pub/sub bus has little overhead but will only work in single document cases.
+The `simple` pub/sub bus has very little overhead, but operates synchronously.  You can trade-off some performance for an async bus, the `event` pubsub bus.
 
 (In-progress) The cross document bus has a small amount of overhead, but allows you to publish and subscribe from/to functions that live in other web workers
 or windows (in-browser concurrency for "free").
+
+In most cases, the simple bus is the best choice.
 
 ### Common external API support
 
