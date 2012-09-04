@@ -19,19 +19,27 @@ You can pull all the pieces of Shoreleave into your project by adding the follow
 (defproject ...
   
   :dependencies [[org.clojure/clojure "1.4.0"]
-                 [shoreleave "0.2.2-SNAPSHOT"]
-                 [shoreleave/shoreleave-remote-noir "0.2.2-SNAPSHOT"]
+                 [shoreleave "0.2.2"]
+                 [shoreleave/shoreleave-remote-noir "0.2.2"]
                  ...
                  ]
 ...
 )
 ```
 
-Individual utilies can be pulled in with `[shoreleave/UTILITY "0.2.2-SNAPSHOT"]`.  See the specific repo/artifact names below.
+Individual utilies can be pulled in with `[shoreleave/UTILITY "0.2.2"]`.  See the specific repo/artifact names below.
 
 Overview
 ----------
 Shoreleave has support for the following:
+
+### Common client-side interactions
+
+ * An idiomatic interface to cookies
+ * An idiomatic interface to browser history (with extended support for HTML5 History API)
+ * BlobBuilders and on-demand asset building
+ * (Coming soon) An idiomatic interface to browser storage (Local Storage, Session Storage, and App Cache)
+ * Common auxiliary functions out-of-the-box to handle query strings, browser-repl, hash strings, and CLJS/JS interop
 
 ### A remotes package
 
@@ -101,15 +109,6 @@ The simple pub/sub bus has little overhead but will only work in single document
 (In-progress) The cross document bus has a small amount of overhead, but allows you to publish and subscribe from/to functions that live in other web workers
 or windows (in-browser concurrency for "free").
 
-
-### Common client-side interactions
-
- * An idiomatic interface to cookies
- * An idiomatic interface to browser history (with extended support for HTML5 History API)
- * BlobBuilders and on-demand asset building
- * (Coming soon) An idiomatic interface to browser storage (Local Storage, Session Storage, and App Cache)
- * Common auxiliary functions out-of-the-box to handle query strings, browser-repl, hash strings, and CLJS/JS interop
-
 ### Common external API support
 
 Shoreleave has JSONP-wrapped support for external APIs including:
@@ -122,6 +121,7 @@ Shoreleave has JSONP-wrapped support for external APIs including:
 
  * A `Function` object that supports metadata
  * The ability to create embedded web workers
+
 
 Where's the code?
 -----------------
@@ -145,7 +145,17 @@ I have found it to pair particularly well with [Enfocus](https://github.com/ckir
 
 Examples and usage
 ------------------
-Please the github wiki for examples of each library feature
+Please the github doc pages (ie: Marginalia docs) above for library specifics.
+
+There is a community-contributed [demo app](https://github.com/robert-stuttaford/demo-enfocus-pubsub-remote) thanks to the hard work of [Robert Stuttaford](https://github.com/robert-stuttaford)
+
+
+Google Group and General Help
+------------------------------
+There is a [Shoreleave CLJS]() Google Group.  Please feel free to post all questions and general comments there.
+
+Additionally, you can ping `ohpauleez` in #clojure on Freenode.
+
 
 License
 -------
