@@ -37,9 +37,10 @@ Shoreleave has support for the following:
 
  * An idiomatic interface to cookies
  * An idiomatic interface to browser history (with extended support for HTML5 History API)
- * BlobBuilders and on-demand asset building
- * (Coming soon) An idiomatic interface to browser storage (Local Storage, Session Storage, and App Cache)
+ * HTML Blob construction and on-demand asset building
+ * An idiomatic interface to browser storage (Local Storage, Session Storage.  App Cache coming soon)
  * Common auxiliary functions out-of-the-box to handle query strings, browser-repl, hash strings, and CLJS/JS interop
+ * and more...
 
 ### A remotes package
 
@@ -156,14 +157,6 @@ The `simple` pub/sub bus has very little overhead, but operates synchronously.  
 or windows (in-browser concurrency for "free").
 
 In most cases, the simple bus is the best choice.
-
-### Common client-side interactions
-
- * An idiomatic interface to cookies
- * An idiomatic interface to browser history (with extended support for HTML5 History API)
- * HTML Blob construction and on-demand asset building
- * An idiomatic interface to browser storage (Local Storage, Session Storage.  App Cache coming soon)
- * Common auxiliary functions out-of-the-box to handle query strings, browser-repl, hash strings, and CLJS/JS interop
 
 ### Common external API support
 
