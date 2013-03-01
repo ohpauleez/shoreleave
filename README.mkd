@@ -19,15 +19,15 @@ You can pull all the pieces of Shoreleave into your project by adding the follow
 (defproject ...
   
   :dependencies [[org.clojure/clojure "1.4.0"]
-                 [shoreleave "0.2.2-SNAPSHOT"]
-                 [shoreleave/shoreleave-remote-noir "0.2.2-SNAPSHOT"]
+                 [shoreleave "0.3.0"]
+                 [shoreleave/shoreleave-remote-ring "0.3.0"]
                  ...
                  ]
 ...
 )
 ```
 
-Individual utilies can be pulled in with `[shoreleave/UTILITY "0.2.2-SNAPSHOT"]`.  See the specific repo/artifact names below.
+Individual utilies can be pulled in with `[shoreleave/UTILITY "0.3.0"]`.  See the specific repo/artifact names below.
 
 Overview
 ----------
@@ -38,33 +38,77 @@ Shoreleave has support for the following:
 Shoreleave's remotes package includes XHR, Pooled-XHR, JSONP, and HTTP-RPC capabilities.
 
 CSRF protection is built in if your Clojure server is using the [ring-anti-forgery](https://github.com/weavejester/ring-anti-forgery) middleware.
+See [shoreleave-baseline](https://github.com/shoreleave/shoreleave-baseline) for anti-forgery details.
 
 The HTTP-RPC allows for exposing a server-side namespace as a client-side API, via a single server-side call, `remote-ns`.
 
-A typical [Noir](http://www.webnoir.org/) setup might look like:
+A typical [Compojure](https://github.com/weavejester/compojure) setup might look like:
 
 ```clojure
-(ns example
-  (:require [example.api] ; You don't have to pull this in, but it is suggested
-            [noir.shoreleave.rpc :as rpc]))
+(ns baseline.handler
+  (:require [compojure.handler :as handler]
+            [baseline.routes :as routes]
+            [baseline.config :refer [config]]
+            [ring.middleware.gzip]
+            [ring.middleware.file-info]
+            [ring.middleware.anti-forgery]
+            [ring.middleware.session.cookie :refer [cookie-store]]
+            [shoreleave.middleware.rpc]
+            [hiccup.middleware]))
 
-;; ...
+(def app routes/all-routes)
 
-;; The Base Web Server
-;; ---------------------
-;; Serve every view file found in `src/example/views`
-(server/load-views "src/example/views/")
+(defn get-handler [app]
+  (-> app
+    (shoreleave.middleware.rpc/wrap-rpc)
+    (ring.middleware.anti-forgery/wrap-anti-forgery)
+    (ring.middleware.gzip/wrap-gzip)
+    (handler/site {:session {:cookie-name "baseline"
+                             :store (cookie-store {:key (config :session-secret)})
+                             ;:store (cookie-store)
+                             :cookie-attrs {:max-age (config :session-max-age-seconds)
+                                            :http-only true}}})
+    (ring.middleware.file-info/wrap-file-info)
+    (hiccup.middleware/wrap-base-url)))
 
-;; Remote Namespaces
-;; -----------------
-(rpc/activate-remotes!)
-(rpc/remote-ns 'example.api :as "api")
+(def war-handler (get-handler app))
+```
 
-;; Middleware
-;;-----------
-(server/add-middleware ring.middleware.gzip/wrap-gzip)
-(server/add-middleware ring.middleware.file-info/wrap-file-info)
-(server/add-middleware ring.middleware.anti-forgery/wrap-anti-forgery)
+With a routes file that might look like this:
+
+```clojure
+(ns baseline.routes
+  (:require [compojure.core :as c-core :refer [defroutes
+                                               GET POST PUT DELETE
+                                               HEAD OPTIONS PATCH
+                                               ANY]]
+            [compojure.route :as c-route]
+            [shoreleave.middleware.rpc :refer [remote-ns]]
+            ;; Controllers
+            [baseline.controllers.site :as cont-site]
+            ;; Public APIs
+            [baseline.controllers.api]))
+
+;; Remote APIs exposed
+;; -------------------
+(remote-ns 'baseline.controllers.api :as "api")
+
+;; Controller routes, ROA oriented
+;; -------------------------------
+(defroutes site
+  (GET "/" {session :session} (cont-site/index session))
+  (GET "/test" [] (cont-site/test-shoreleave)))
+
+;; Core system routes
+;; ------------------
+(defroutes app-routes
+  (c-route/resources "/")
+  (c-route/not-found "404 Page not found."))
+
+;; The top-level collection of all routes
+;; --------------------------------------
+(def all-routes (c-core/routes site
+                               app-routes))
 ```
 
 You can also define single "global" rpc functions:
@@ -75,6 +119,8 @@ You can also define single "global" rpc functions:
     (println "Pinged by client!")
     "PONG - from the server"))
 ```
+
+See the full example in the [shoreleave-baseline](https://github.com/shoreleave/shoreleave-baseline) project
 
 ### A pub/sub abstraction (and implementations)
 
@@ -107,7 +153,7 @@ or windows (in-browser concurrency for "free").
  * An idiomatic interface to cookies
  * An idiomatic interface to browser history (with extended support for HTML5 History API)
  * BlobBuilders and on-demand asset building
- * (Coming soon) An idiomatic interface to browser storage (Local Storage, Session Storage, and App Cache)
+ * An idiomatic interface to browser storage (Local Storage, Session Storage.  App Cache coming soon)
  * Common auxiliary functions out-of-the-box to handle query strings, browser-repl, hash strings, and CLJS/JS interop
 
 ### Common external API support
@@ -120,21 +166,44 @@ Shoreleave has JSONP-wrapped support for external APIs including:
 
 ### An enhanced ClojureScript experience
 
- * A `Function` object that supports metadata
  * The ability to create embedded web workers
 
 Where's the code?
 -----------------
+There is a starter project that you can use as template, similar to how ClojureScript:One worked.
+It's also a great source to see how to build out Shoreleave+Compojure projects.
+ * [shoreleave-baseline](https://github.com/shoreleave/shoreleave-baseline) application - [marg docs](http://shoreleave.github.com/shoreleave-baseline/) of the kitchensink branch
+
 Shoreleave is a big project and has been split up into smaller pieces within the [Shoreleave organization](https://github.com/shoreleave):
 
  * [shoreleave-core](https://github.com/shoreleave/shoreleave-core) - [Marg docs](http://shoreleave.github.com/shoreleave-core/)
  * [shoreleave-browser](https://github.com/shoreleave/shoreleave-browser) - [Marg docs](http://shoreleave.github.com/shoreleave-browser/)
  * [shoreleave-pubsub](https://github.com/shoreleave/shoreleave-pubsub) - [Marg docs](http://shoreleave.github.com/shoreleave-pubsub/)
  * [shoreleave-remote](https://github.com/shoreleave/shoreleave-remote) - [Marg docs](http://shoreleave.github.com/shoreleave-remote/)
- * [shoreleave-remote-noir](https://github.com/shoreleave/shoreleave-remote-noir) - Marg docs coming
- * [shoreleave-services](https://github.com/shoreleave/shoreleave-services) - Marg docs coming
+ * [shoreleave-remote-ring](https://github.com/shoreleave/shoreleave-remote-ring) - [Marg docs](http://shoreleave.github.com/shoreleave-remote-ring/)
+ * [shoreleave-services](https://github.com/shoreleave/shoreleave-services) - [Marg docs](http://shoreleave.github.com/shoreleave-services/)
+
+### Deprecated
+ * [shoreleave-remote-noir](https://github.com/shoreleave/shoreleave-remote-noir) - No published marg docs
  * [shoreleave-worker](https://github.com/shoreleave/shoreleave-worker) - [Marg docs](http://shoreleave.github.com/shoreleave-worker/)
 
+
+What's new in the latest version?
+---------------------------------
+The latest version is `0.3.0`
+
+ * Example application and template project, [shoreleave-baseline](https://github.com/shoreleave/shoreleave-baseline)
+ * Finalized protocols and support for browser web storage (localStorage, sessionStorage)
+ * Ring middleware updated and moved to be the standard Shoreleave server-side component
+ * Dropped Noir support
+ * Updated remotes support for better error handling
+ * Improved pub/sub handling of various flow combinations
+ * `subscribe->` added the pub/sub bus procotol - allows threading of flows
+ * Replaced deprecated CLJS protocol usage
+ * Code migrated from this project to CLJS proper
+ * removed jQuery support from remotes
+ * bug fixes and performance improvements
+ * Added more documentation
 
 Plays well with others
 ----------------------
