@@ -33,6 +33,14 @@ Overview
 ----------
 Shoreleave has support for the following:
 
+### Common client-side interactions
+
+ * An idiomatic interface to cookies
+ * An idiomatic interface to browser history (with extended support for HTML5 History API)
+ * BlobBuilders and on-demand asset building
+ * (Coming soon) An idiomatic interface to browser storage (Local Storage, Session Storage, and App Cache)
+ * Common auxiliary functions out-of-the-box to handle query strings, browser-repl, hash strings, and CLJS/JS interop
+
 ### A remotes package
 
 Shoreleave's remotes package includes XHR, Pooled-XHR, JSONP, and HTTP-RPC capabilities.
@@ -142,17 +150,18 @@ It's often most beneficial to use DOM listeners as entry-points into the pub/sub
 Shoreleave's pub/sub system is built upon two protocols: "brokers" and "publishables"
 
 Out of the box, Shoreleave allows you to publish funtions, atoms, web workers, and anything that implements (str ...)/.toString, as topics.
-The simple pub/sub bus has little overhead but will only work in single document cases.
+The `simple` pub/sub bus has very little overhead, but operates synchronously.  You can trade-off some performance for an async bus, the `event` pubsub bus.
 
 (In-progress) The cross document bus has a small amount of overhead, but allows you to publish and subscribe from/to functions that live in other web workers
 or windows (in-browser concurrency for "free").
 
+In most cases, the simple bus is the best choice.
 
 ### Common client-side interactions
 
  * An idiomatic interface to cookies
  * An idiomatic interface to browser history (with extended support for HTML5 History API)
- * BlobBuilders and on-demand asset building
+ * HTML Blob construction and on-demand asset building
  * An idiomatic interface to browser storage (Local Storage, Session Storage.  App Cache coming soon)
  * Common auxiliary functions out-of-the-box to handle query strings, browser-repl, hash strings, and CLJS/JS interop
 
@@ -167,6 +176,7 @@ Shoreleave has JSONP-wrapped support for external APIs including:
 ### An enhanced ClojureScript experience
 
  * The ability to create embedded web workers
+
 
 Where's the code?
 -----------------
@@ -202,6 +212,7 @@ The latest version is `0.3.0`
  * Replaced deprecated CLJS protocol usage
  * Code migrated from this project to CLJS proper
  * removed jQuery support from remotes
+ * Updated all interfaces to their HTML5 finalized specs
  * bug fixes and performance improvements
  * Added more documentation
 
@@ -214,11 +225,21 @@ I have found it to pair particularly well with [Enfocus](https://github.com/ckir
 
 Examples and usage
 ------------------
-Please the github wiki for examples of each library feature
+Please the github doc pages (ie: Marginalia docs) above for library specifics.
+
+There is a community-contributed [demo app](https://github.com/robert-stuttaford/demo-enfocus-pubsub-remote) thanks to the hard work of [Robert Stuttaford](https://github.com/robert-stuttaford)
+
+
+Google Group and General Help
+------------------------------
+There is a [Shoreleave CLJS](https://groups.google.com/forum/#!forum/shoreleave-cljs) Google Group.  Please feel free to post all questions and general comments there.
+
+Additionally, you can ping `ohpauleez` in #clojure on Freenode.
+
 
 License
 -------
-Copyright (C) 2012 Paul deGrandis
+Copyright (C) 2012-2013 Paul deGrandis
 
 Distributed under the Eclipse Public License, the same as Clojure.
 
